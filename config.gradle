@@ -1,0 +1,26 @@
+def android = [:]
+android.compileSdkVersion = 34
+android.minSdkVersion = 21
+android.targetSdkVersion = 34
+android.gradle_version = '8.0.1'
+android.kotlin_version = '1.8.22'
+ext.android = android
+
+def deps = [:]
+def support = [:]
+support.ktx = 'androidx.core:core-ktx:1.10.0'
+deps.support = support
+ext.deps = deps
+
+static def addRepos(RepositoryHandler handler) {
+    handler.maven { url 'https://maven.aliyun.com/repository/google' }
+    handler.maven { url 'https://maven.aliyun.com/repository/public' }
+    handler.maven { url 'https://maven.aliyun.com/repository/gradle-plugin' }
+    handler.maven { url "https://jitpack.io" }
+    handler.maven { url 'https://raw.githubusercontent.com/987151396/ioserial-repo/main/' }
+    handler.google()
+    handler.mavenCentral()
+    handler.gradlePluginPortal()
+
+}
+ext.addRepos = this.&addRepos
