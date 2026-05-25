@@ -16,6 +16,9 @@ import com.rv.framwork.broadcast.BroadEventConst.VOLUME_SHOW
 import com.rv.framwork.broadcast.BroadEventConst.VOLUME_SHOW_EXTRA
 import com.rv.framwork.broadcast.BroadEventConst.ZXW_SYS_KEY_EVT
 import com.rv.framwork.broadcast.MediaInfoExtra
+import com.rv.framwork.flowbus.event.ScreensaverEvent
+import com.rv.framwork.flowbus.event.ShowVolumeEvent
+import com.rv.framwork.flowbus.event.SysVolumeEvent
 import com.rv.framwork.flowbus.postEvent
 import com.rv.framwork.manager.FlutterChannelManager
 import com.rv.framwork.utils.AppLogUtil
@@ -49,7 +52,7 @@ class ZxwMcuBroadcast : BroadcastReceiver() {
         }else if(BroadEventConst.DREAM_ACTION == intent?.action){
             val isEnable = intent.extras?.getBoolean(DREAM_EXTRA_KEY)?:false
             AppLogUtil.e("DREAM_EXTRA_KEY - isEnable: $isEnable")
-            FlutterChannelManager.sendScreensaver(isEnable)
+            //FlutterChannelManager.sendScreensaver(isEnable)
             postEvent(ScreensaverEvent(isEnable))
         }else if(BroadEventConst.MCU_MSG_MAIL_VOL == intent?.action){
             intent.getIntExtra(MCU_MSG_MAIL_VOL_VAL,0).apply {
