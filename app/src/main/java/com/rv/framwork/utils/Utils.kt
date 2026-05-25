@@ -2,7 +2,7 @@ package com.rv.framwork.utils
 
 import android.app.Application
 
-object Utils {
+internal object Utils {
     private var app: Application? = null
 
     fun init(application: Application) {

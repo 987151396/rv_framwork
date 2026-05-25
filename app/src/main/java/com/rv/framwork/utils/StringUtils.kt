@@ -180,7 +180,7 @@ internal object StringUtils {
         try {
             result = URLEncoder.encode(value, "utf-8")
         } catch (e: Exception) {
-            AppLogUtil.d(TAG, e.message)
+            e.message?.let { AppLogUtil.d(TAG, it) }
         }
         return result
     }
@@ -198,7 +198,7 @@ internal object StringUtils {
         try {
             return Integer.valueOf(str)
         } catch (e: NumberFormatException) {
-            AppLogUtil.d(TAG, e.message)
+            e.message?.let { AppLogUtil.d(TAG, it) }
         }
         return defaultValue
     }
@@ -215,7 +215,7 @@ internal object StringUtils {
         try {
             return java.lang.Long.valueOf(str)
         } catch (e: Exception) {
-            AppLogUtil.d(TAG, e.message)
+            e.message?.let { AppLogUtil.d(TAG, it) }
         }
         return defaultValue
     }
@@ -231,7 +231,7 @@ internal object StringUtils {
         try {
             return java.lang.Float.valueOf(value)
         } catch (e: NumberFormatException) {
-            AppLogUtil.d(TAG, e.message)
+            e.message?.let { AppLogUtil.d(TAG, it) }
         }
         return 0f
     }
@@ -252,7 +252,7 @@ internal object StringUtils {
             val m = p.matcher(email)
             m.matches()
         } catch (e: Exception) {
-            AppLogUtil.d(TAG, e.message)
+            e.message?.let { AppLogUtil.d(TAG, it) }
             false
         }
     }
@@ -266,7 +266,7 @@ internal object StringUtils {
             val m = p.matcher(phone)
             m.matches()
         } catch (e: Exception) {
-            AppLogUtil.d(TAG, e.message)
+            e.message?.let { AppLogUtil.d(TAG, it) }
             false
         }
     }
@@ -281,7 +281,7 @@ internal object StringUtils {
             val m = p.matcher(call)
             m.matches()
         } catch (e: Exception) {
-            AppLogUtil.d(TAG, e.message)
+            e.message?.let { AppLogUtil.d(TAG, it) }
             false
         }
     }

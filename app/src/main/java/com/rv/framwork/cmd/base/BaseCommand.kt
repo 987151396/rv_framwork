@@ -34,6 +34,7 @@ abstract class BaseCommand : Command {
 
     interface DataHandler {
         fun onDataReceived(comName: String?, buffer: ByteArray?, size: Int)
+        fun onCanBusUpdateDataReceived(comName: String?, buffer: ByteArray?, size: Int)
         fun onDataSend(buffer: ByteArray?)
     }
 }

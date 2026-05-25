@@ -1,257 +1,252 @@
-package com.rv.framwork.utils;
+package com.rv.framwork.utils
 
-import android.text.TextUtils;
-import android.util.Log;
+import android.text.TextUtils
+import android.util.Log
 
+internal object AppLogUtil {
+    var customTagPrefix: String = "simple_"
 
-public class AppLogUtil {
-    public static String customTagPrefix = "simple_";
+    var allowD: Boolean = AppUtil.isDebug()
+    var allowE: Boolean = AppUtil.isDebug()
+    var allowI: Boolean = AppUtil.isDebug()
+    var allowV: Boolean = AppUtil.isDebug()
+    var allowW: Boolean = AppUtil.isDebug()
+    var allowWtf: Boolean = AppUtil.isDebug()
 
-    private AppLogUtil() {
-    }
-
-    public static boolean allowD = AppUtil.isDebug();
-    public static boolean allowE = AppUtil.isDebug();
-    public static boolean allowI = AppUtil.isDebug();
-    public static boolean allowV = AppUtil.isDebug();
-    public static boolean allowW = AppUtil.isDebug();
-    public static boolean allowWtf =AppUtil.isDebug();
-
-    private static String generateTag(StackTraceElement caller) {
-        String tag = "%s.%s(L:%d)";
-        String callerClazzName = caller.getClassName();
-        callerClazzName = callerClazzName.substring(callerClazzName.lastIndexOf(".") + 1);
-        tag = String.format(tag, callerClazzName, caller.getMethodName(), caller.getLineNumber());
-        tag = TextUtils.isEmpty(customTagPrefix) ? tag : customTagPrefix + ":" + tag;
-        return tag;
+    private fun generateTag(caller: StackTraceElement): String {
+        var tag = "%s.%s(L:%d)"
+        var callerClazzName = caller.getClassName()
+        callerClazzName = callerClazzName.substring(callerClazzName.lastIndexOf(".") + 1)
+        tag = String.format(tag, callerClazzName, caller.getMethodName(), caller.getLineNumber())
+        tag = if (TextUtils.isEmpty(customTagPrefix)) tag else customTagPrefix + ":" + tag
+        return tag
     }
 
     // 重写 CustomLogger 可替换默认使用的 LOG 类
-    public static CustomLogger customLogger;
+    var customLogger: CustomLogger? = null
 
-    public interface CustomLogger {
-        void d(String tag, String content);
-
-        void d(String tag, String content, Throwable tr);
-
-        void e(String tag, String content);
-
-        void e(String tag, String content, Throwable tr);
-
-        void i(String tag, String content);
-
-        void i(String tag, String content, Throwable tr);
-
-        void v(String tag, String content);
-
-        void v(String tag, String content, Throwable tr);
-
-        void w(String tag, String content);
-
-        void w(String tag, String content, Throwable tr);
-
-        void w(String tag, Throwable tr);
-
-        void wtf(String tag, String content);
-
-        void wtf(String tag, String content, Throwable tr);
-
-        void wtf(String tag, Throwable tr);
-    }
-
-    public static void d(String content) {
-        if (!allowD) return;
-        StackTraceElement caller = getCallerStackTraceElement();
-        String tag = generateTag(caller);
+    fun d(content: String) {
+        if (!allowD) return
+        val caller: StackTraceElement = callerStackTraceElement
+        val tag = generateTag(caller)
 
         if (customLogger != null) {
-            customLogger.d(tag, content);
+            customLogger!!.d(tag, content)
         } else {
-            Log.d(tag, content);
+            Log.d(tag, content)
         }
     }
 
 
-    public static void d(String tag, String content) {
-        if (!allowD) return;
+    fun d(tag: String?, content: String) {
+        if (!allowD) return
         if (customLogger != null) {
-            customLogger.d(tag, content);
+            customLogger!!.d(tag, content)
         } else {
-            Log.d(tag, content);
+            Log.d(tag, content)
         }
     }
 
-    public static StackTraceElement getCallerStackTraceElement() {
-        return Thread.currentThread().getStackTrace()[4];
-    }
+    val callerStackTraceElement: StackTraceElement
+        get() = Thread.currentThread().getStackTrace()[4]
 
-    public static void d(String content, Throwable tr) {
-        if (!allowD) return;
-        StackTraceElement caller = getCallerStackTraceElement();
-        String tag = generateTag(caller);
+    fun d(content: String?, tr: Throwable?) {
+        if (!allowD) return
+        val caller: StackTraceElement = callerStackTraceElement
+        val tag = generateTag(caller)
 
         if (customLogger != null) {
-            customLogger.d(tag, content, tr);
+            customLogger!!.d(tag, content, tr)
         } else {
-            Log.d(tag, content, tr);
+            Log.d(tag, content, tr)
         }
     }
 
-    public static void e(String content) {
-        if (!allowE) return;
-        StackTraceElement caller = getCallerStackTraceElement();
-        String tag = generateTag(caller);
+    @JvmStatic
+    fun e(content: String) {
+        if (!allowE) return
+        val caller: StackTraceElement = callerStackTraceElement
+        val tag = generateTag(caller)
 
         if (customLogger != null) {
-            customLogger.e(tag, content);
+            customLogger!!.e(tag, content)
         } else {
-            Log.e(tag, content);
+            Log.e(tag, content)
         }
     }
 
-    public static void e(Exception e) {
-        if (!allowE) return;
-        StackTraceElement caller = getCallerStackTraceElement();
-        String tag = generateTag(caller);
+    fun e(e: Exception) {
+        if (!allowE) return
+        val caller: StackTraceElement = callerStackTraceElement
+        val tag = generateTag(caller)
 
         if (customLogger != null) {
-            customLogger.e(tag, e.getMessage(), e);
+            customLogger!!.e(tag, e.message, e)
         } else {
-            Log.e(tag, e.getMessage(), e);
+            Log.e(tag, e.message, e)
         }
     }
 
-    public static void e(String content, Throwable tr) {
-        if (!allowE) return;
-        StackTraceElement caller = getCallerStackTraceElement();
-        String tag = generateTag(caller);
+    fun e(content: String?, tr: Throwable?) {
+        if (!allowE) return
+        val caller: StackTraceElement = callerStackTraceElement
+        val tag = generateTag(caller)
 
         if (customLogger != null) {
-            customLogger.e(tag, content, tr);
+            customLogger!!.e(tag, content, tr)
         } else {
-            Log.e(tag, content, tr);
+            Log.e(tag, content, tr)
         }
     }
 
-    public static void i(String content) {
-        if (!allowI) return;
-        StackTraceElement caller = getCallerStackTraceElement();
-        String tag = generateTag(caller);
+    fun i(content: String) {
+        if (!allowI) return
+        val caller: StackTraceElement = callerStackTraceElement
+        val tag = generateTag(caller)
 
         if (customLogger != null) {
-            customLogger.i(tag, content);
+            customLogger!!.i(tag, content)
         } else {
-            Log.i(tag, content);
+            Log.i(tag, content)
         }
     }
 
-    public static void i(String content, Throwable tr) {
-        if (!allowI) return;
-        StackTraceElement caller = getCallerStackTraceElement();
-        String tag = generateTag(caller);
+    fun i(content: String?, tr: Throwable?) {
+        if (!allowI) return
+        val caller: StackTraceElement = callerStackTraceElement
+        val tag = generateTag(caller)
 
         if (customLogger != null) {
-            customLogger.i(tag, content, tr);
+            customLogger!!.i(tag, content, tr)
         } else {
-            Log.i(tag, content, tr);
+            Log.i(tag, content, tr)
         }
     }
 
-    public static void v(String content) {
-        if (!allowV) return;
-        StackTraceElement caller = getCallerStackTraceElement();
-        String tag = generateTag(caller);
+    fun v(content: String) {
+        if (!allowV) return
+        val caller: StackTraceElement = callerStackTraceElement
+        val tag = generateTag(caller)
 
         if (customLogger != null) {
-            customLogger.v(tag, content);
+            customLogger!!.v(tag, content)
         } else {
-            Log.v(tag, content);
+            Log.v(tag, content)
         }
     }
 
-    public static void v(String content, Throwable tr) {
-        if (!allowV) return;
-        StackTraceElement caller = getCallerStackTraceElement();
-        String tag = generateTag(caller);
+    fun v(content: String?, tr: Throwable?) {
+        if (!allowV) return
+        val caller: StackTraceElement = callerStackTraceElement
+        val tag = generateTag(caller)
 
         if (customLogger != null) {
-            customLogger.v(tag, content, tr);
+            customLogger!!.v(tag, content, tr)
         } else {
-            Log.v(tag, content, tr);
+            Log.v(tag, content, tr)
         }
     }
 
-    public static void w(String content) {
-        if (!allowW) return;
-        StackTraceElement caller = getCallerStackTraceElement();
-        String tag = generateTag(caller);
+    fun w(content: String) {
+        if (!allowW) return
+        val caller: StackTraceElement = callerStackTraceElement
+        val tag = generateTag(caller)
 
         if (customLogger != null) {
-            customLogger.w(tag, content);
+            customLogger!!.w(tag, content)
         } else {
-            Log.w(tag, content);
+            Log.w(tag, content)
         }
     }
 
-    public static void w(String content, Throwable tr) {
-        if (!allowW) return;
-        StackTraceElement caller = getCallerStackTraceElement();
-        String tag = generateTag(caller);
+    fun w(content: String?, tr: Throwable?) {
+        if (!allowW) return
+        val caller: StackTraceElement = callerStackTraceElement
+        val tag = generateTag(caller)
 
         if (customLogger != null) {
-            customLogger.w(tag, content, tr);
+            customLogger!!.w(tag, content, tr)
         } else {
-            Log.w(tag, content, tr);
+            Log.w(tag, content, tr)
         }
     }
 
-    public static void w(Throwable tr) {
-        if (!allowW) return;
-        StackTraceElement caller = getCallerStackTraceElement();
-        String tag = generateTag(caller);
+    fun w(tr: Throwable?) {
+        if (!allowW) return
+        val caller: StackTraceElement = callerStackTraceElement
+        val tag = generateTag(caller)
 
         if (customLogger != null) {
-            customLogger.w(tag, tr);
+            customLogger!!.w(tag, tr)
         } else {
-            Log.w(tag, tr);
+            Log.w(tag, tr)
         }
     }
 
 
-    public static void wtf(String content) {
-        if (!allowWtf) return;
-        StackTraceElement caller = getCallerStackTraceElement();
-        String tag = generateTag(caller);
+    fun wtf(content: String?) {
+        if (!allowWtf) return
+        val caller: StackTraceElement = callerStackTraceElement
+        val tag = generateTag(caller)
 
         if (customLogger != null) {
-            customLogger.wtf(tag, content);
+            customLogger!!.wtf(tag, content)
         } else {
-            Log.wtf(tag, content);
+            Log.wtf(tag, content)
         }
     }
 
-    public static void wtf(String content, Throwable tr) {
-        if (!allowWtf) return;
-        StackTraceElement caller = getCallerStackTraceElement();
-        String tag = generateTag(caller);
+    fun wtf(content: String?, tr: Throwable?) {
+        if (!allowWtf) return
+        val caller: StackTraceElement = callerStackTraceElement
+        val tag = generateTag(caller)
 
         if (customLogger != null) {
-            customLogger.wtf(tag, content, tr);
+            customLogger!!.wtf(tag, content, tr)
         } else {
-            Log.wtf(tag, content, tr);
+            Log.wtf(tag, content, tr)
         }
     }
 
-    public static void wtf(Throwable tr) {
-        if (!allowWtf) return;
-        StackTraceElement caller = getCallerStackTraceElement();
-        String tag = generateTag(caller);
+    fun wtf(tr: Throwable) {
+        if (!allowWtf) return
+        val caller: StackTraceElement = callerStackTraceElement
+        val tag = generateTag(caller)
 
         if (customLogger != null) {
-            customLogger.wtf(tag, tr);
+            customLogger!!.wtf(tag, tr)
         } else {
-            Log.wtf(tag, tr);
+            Log.wtf(tag, tr)
         }
     }
 
+    interface CustomLogger {
+        fun d(tag: String?, content: String?)
+
+        fun d(tag: String?, content: String?, tr: Throwable?)
+
+        fun e(tag: String?, content: String?)
+
+        fun e(tag: String?, content: String?, tr: Throwable?)
+
+        fun i(tag: String?, content: String?)
+
+        fun i(tag: String?, content: String?, tr: Throwable?)
+
+        fun v(tag: String?, content: String?)
+
+        fun v(tag: String?, content: String?, tr: Throwable?)
+
+        fun w(tag: String?, content: String?)
+
+        fun w(tag: String?, content: String?, tr: Throwable?)
+
+        fun w(tag: String?, tr: Throwable?)
+
+        fun wtf(tag: String?, content: String?)
+
+        fun wtf(tag: String?, content: String?, tr: Throwable?)
+
+        fun wtf(tag: String?, tr: Throwable?)
+    }
 }

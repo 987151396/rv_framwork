@@ -33,16 +33,11 @@ import com.rv.framwork.broadcast.BroadEventConst.ZXW_RADIO_INFO_EVT
 import com.rv.framwork.broadcast.BroadEventConst.ZXW_SYS_KEY_EVT
 import com.rv.framwork.broadcast.ZxwMcuBroadcast
 import com.rv.framwork.cmd.base.AndroidDevice
-import com.rv.framwork.event.CanBusUpdateEvent
 import com.rv.framwork.flowbus.event.StartBleServerEvent
 import com.rv.framwork.flowbus.postEvent
 import com.rv.framwork.utils.AppLogUtil
-import com.rv.framwork.utils.ShellUtil
 import com.rv.framwork.utils.StringUtils
 import com.rv.framwork.utils.Utils
-import com.google.gson.Gson
-import com.rv.framwork.cmd.KeyCodeConst
-import org.greenrobot.eventbus.EventBus
 
 class ZxwSerialCommand : SerialCommand() {
     private val bd : ZxwMcuBroadcast by lazy {
@@ -55,7 +50,7 @@ class ZxwSerialCommand : SerialCommand() {
                     }else{
                         //把数据直接给总线盒升级页面
                         //commonEventVM.canBusUpdateEvent.postValue(it)
-                        EventBus.getDefault().post(CanBusUpdateEvent(it));
+                        dataHandler?.onCanBusUpdateDataReceived(portStr, it, it.size)
                     }
                 }
             }
@@ -155,18 +150,7 @@ class ZxwSerialCommand : SerialCommand() {
         return 0
     }
 
-    private fun getMediaSourceInfo(){
-        ShellUtil.execCmd("getprop wits.source",false).runCatching {
-            this
-        }.onSuccess {
-            runCatching {
-                //it.successMsg.toInt()
-                AppLogUtil.e(Gson().toJson(it))
-            }.onSuccess {
 
-            }
-        }
-    }
 
     private fun getSystemVolume(context: Context, streamType: Int = AudioManager.STREAM_MUSIC): Pair<Int, Int> {
         val audioManager = context.getSystemService(Context.AUDIO_SERVICE) as AudioManager

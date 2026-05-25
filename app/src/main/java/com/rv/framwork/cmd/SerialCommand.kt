@@ -1,12 +1,10 @@
 package com.rv.framwork.cmd
 
 
-import com.rv.framwork.base.commonEventVM
 import com.rv.framwork.cmd.base.AndroidDevice
 import com.rv.framwork.cmd.base.BaseCommand
 import com.rv.framwork.utils.AppLogUtil
 import com.rv.framwork.utils.StringUtils
-import com.rv.framwork.utils.ToastUtil
 import com.vi.vioserial.NormalSerial
 import com.vi.vioserial.listener.OnSerialDataListener
 
@@ -30,7 +28,7 @@ abstract class SerialCommand : BaseCommand(), DeviceCtrlInterface {
                                     dataHandler?.onDataReceived(portStr, it, it.size)
                                 }else{
                                     //把数据直接给总线盒升级页面
-                                    commonEventVM.canBusUpdateEvent.postValue(it)
+                                    dataHandler?.onCanBusUpdateDataReceived(portStr, it, it.size)
                                 }
                             }
                         }
@@ -48,7 +46,7 @@ abstract class SerialCommand : BaseCommand(), DeviceCtrlInterface {
             }
             return state!!
         }catch (e: Exception){
-            ToastUtil.showShort(e.message ?: "串口打开失败")
+            //ToastUtil.showShort(e.message ?: "串口打开失败")
             e.printStackTrace()
         }
         return 0

@@ -1,7 +1,6 @@
-package com.rv.framwork.utils;
+package com.rv.framwork.utils
 
-public class AppUtil {
-    public static boolean isDebug() {
-        return true; // 默认开启调试模式
-    }
+internal object AppUtil {
+    val isDebug: Boolean
+        get() = true // 默认开启调试模式
 }
