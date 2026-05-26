@@ -10,7 +10,7 @@ val minSdkVersionParam = androidConfigs["minSdkVersion"].toString().toInt()
 val targetSdkVersionParam = androidConfigs["targetSdkVersion"].toString().toInt()
 
 android {
-    namespace = "com.rv.framwork"
+    namespace = "com.rv.framework"
     compileSdk = compileSdkVersionParam
 
     sourceSets {

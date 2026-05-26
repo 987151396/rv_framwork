@@ -22,5 +22,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "rv_framwork"
+rootProject.name = "rv_framework"
 include(":app")
