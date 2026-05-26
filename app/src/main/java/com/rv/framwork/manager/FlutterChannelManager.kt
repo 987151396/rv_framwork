@@ -19,7 +19,7 @@ object FlutterChannelManager {
 
 
 
-    private fun eventChannelFunction(flutterEngine: FlutterEngine,context: Context) {
+    fun eventChannelFunction(flutterEngine: FlutterEngine,context: Context) {
 
         EventChannel(flutterEngine.dartExecutor.binaryMessenger, FLUTTER_NATIVE_MUSIC_INFO).apply {
             this.setStreamHandler(

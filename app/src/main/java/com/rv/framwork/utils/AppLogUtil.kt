@@ -6,12 +6,12 @@ import android.util.Log
 internal object AppLogUtil {
     var customTagPrefix: String = "simple_"
 
-    var allowD: Boolean = AppUtil.isDebug()
-    var allowE: Boolean = AppUtil.isDebug()
-    var allowI: Boolean = AppUtil.isDebug()
-    var allowV: Boolean = AppUtil.isDebug()
-    var allowW: Boolean = AppUtil.isDebug()
-    var allowWtf: Boolean = AppUtil.isDebug()
+    var allowD: Boolean = AppUtil.isDebug
+    var allowE: Boolean = AppUtil.isDebug
+    var allowI: Boolean = AppUtil.isDebug
+    var allowV: Boolean = AppUtil.isDebug
+    var allowW: Boolean = AppUtil.isDebug
+    var allowWtf: Boolean = AppUtil.isDebug
 
     private fun generateTag(caller: StackTraceElement): String {
         var tag = "%s.%s(L:%d)"

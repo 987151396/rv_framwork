@@ -4,6 +4,8 @@ import android.util.Log
 import com.rv.framwork.cmd.base.BaseCommand
 import com.rv.framwork.utils.AppLogUtil
 import com.rv.framwork.utils.StringUtils
+import com.vi.vioserial.NormalSerial
+import kotlinx.coroutines.Delay
 import java.util.concurrent.Executors
 
 open class SerialPortManager{
@@ -22,9 +24,17 @@ open class SerialPortManager{
     fun isCanBusUpdate(values : Boolean){
         command?.isCanBusUpdate(values)
     }
+    fun setSerialDelay(delay: Int){
+        NormalSerial.instance()?.setDelay(delay);
+    }
+    fun setSerialDelayDefault(){
+        NormalSerial.instance()?.setDelayDefault();
+    }
     fun addOnDataReceivedCallBack(dataHandler : BaseCommand.DataHandler){
         command?.dataHandler = dataHandler
     }
+
+
     fun sendCmd(data : ByteArray?){
         if(command?.isCanBusUpdate?.value == false) {
             check()

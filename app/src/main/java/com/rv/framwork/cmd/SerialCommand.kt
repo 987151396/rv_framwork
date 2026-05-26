@@ -23,7 +23,7 @@ abstract class SerialCommand : BaseCommand(), DeviceCtrlInterface {
 
                         override fun onReceive(hexData: ByteArray?) {
                             hexData?.let {
-                                AppLogUtil.e("收到数据 ：" + StringUtils.bytes2HexString(it,it.size) + " --- " + isCanBusUpdate)
+                                AppLogUtil.e("收到数据 ：" + StringUtils.bytes2HexString(it,it.size) + " --- isCanBusUpdate：" + isCanBusUpdate.value)
                                 if(isCanBusUpdate.value == false) {
                                     dataHandler?.onDataReceived(portStr, it, it.size)
                                 }else{
